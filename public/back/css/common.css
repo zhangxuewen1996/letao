@@ -108,3 +108,23 @@ a:visited {
 .lt_main .big {
   color: #3C8DBC;
 }
+.table th,
+.table.table-bordered td {
+  text-align: center;
+  vertical-align: middle;
+}
+.table td .btn-danger{
+  padding: 4px 12px;
+}
+.mb-20 {
+  margin-bottom: 20px;
+}
+.box {
+  position: relative;
+}
+.box input {
+  position: absolute;
+  left: 0;
+  top: 0;
+  opacity: 0;
+}
