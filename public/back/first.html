@@ -136,18 +136,27 @@
           <h4 class="modal-title">
             温馨提示</h4>
         </div>
-        <div class="modal-body">
-          <form id="form">
+        <!-- 将form放在最外面，能够提交表单 -->
+        <form id="form">
+          <div class="modal-body">
+            <!-- <form id="form">
             <div class="form-group">
               <input type="text" class="form-control" name="categoryName" placeholder="请输入一级分类的名称">
             </div>
-          </form>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-          <!-- form="form" form表单的id，允许你的input写到form表单的外面，可以通过form的这个属性关联到表单，相当于写在form里面 -->
-          <button type="submit" form="form" class="btn btn-primary icon_add">添加</button>
-        </div>
+          </form> -->
+
+            <div class="form-group">
+              <input type="text" class="form-control" name="categoryName" placeholder="请输入一级分类的名称">
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+            <!-- form="form" form表单的id，允许你的input写到form表单的外面，可以通过form的这个属性关联到表单，相当于写在form里面 -->
+            <!-- <button type="submit" form="form" class="btn btn-primary icon_add">添加</button> -->
+            <button type="submit" class="btn btn-primary icon_add">添加</button>
+          </div>
+        </form>
+
       </div>
       <!-- /.modal-content -->
     </div>
