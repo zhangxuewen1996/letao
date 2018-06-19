@@ -138,43 +138,53 @@
           <h4 class="modal-title">
             添加分类</h4>
         </div>
-        <div class="modal-body">
-          <!-- 链式框 -->
-          <div class="form-group">
-            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-              请选择一级分类
-              <span class="caret"></span>
-            </button>
-            <ul class="dropdown-menu">
-              <li>
-                <a href="#">美女</a>
-              </li>
-            </ul>
-          </div>
+        <form>
 
-          <!-- 表单 -->
-          <div class="form-group">
-            <input type="text" class="form-control" placeholder="请输入二级分类的名称">
-          </div>
-
-          <!-- 上传图片 -->
-          <div class="form-group">
-            <div class="box">
-              <button class="btn btn-default">上传图片</button>
-              <input type="file" name="" id="">
+          <div class="modal-body">
+            <!-- 链式框 -->
+            <div class="form-group">
+              <!-- 装categoryId的影藏 -->
+              <input type="hidden" name="categoryId">
+              <div class="btn-group">
+                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                  <span class="dropdown-text">请选择一级分类</span>
+                  <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu">
+                  <!-- 挖个坑 -->
+                </ul>
+              </div>
             </div>
-          </div>
 
-          <!-- 图片显示 -->
-          <div class="form-group">
-            <img src="images/none.png" width="100" height="100" alt="">
-          </div>
+            <!-- 表单 -->
+            <div class="form-group">
+              <input type="text" class="form-control" placeholder="请输入二级分类的名称" name="brandName">
+              <input type="hidden" name="hot" value="1">
+            </div>
 
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-          <button type="button" class="btn btn-primary icon_add">添加</button>
-        </div>
+            <!-- 上传图片 -->
+            <div class="form-group">
+              <!-- <div class="box"> -->
+              <label for="uploadPic" class="btn btn-default">上传图片</label>
+              <input type="file" id="uploadPic" class="hidden" name="pic1" data-url="/category/addSecondCategoryPic">
+              <!-- </div> -->
+              <input type="hidden" name="brandLogo">
+            </div>
+
+            <!-- 图片显示 -->
+            <div class="form-group">
+              <div class="img_box">
+                <img src="images/none.png" width="100" height="100" alt="">
+              </div>
+            </div>
+
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+            <button type="submit" class="btn btn-primary icon_add">添加</button>
+          </div>
+        </form>
+
       </div>
       <!-- /.modal-content -->
     </div>
@@ -188,9 +198,18 @@
       <td width="30%">{{v.categoryName}}</td>
       <td width="30%">{{v.brandName}}</td>
       <td width="30%">
-        <img src="{{v.brandLogo}}" width="50" height="50" alt="">
+        <img src="{{v.brandLogo}}" width="50" alt="">
       </td>
     </tr>
+    {{ /each }}
+  </script>
+
+  <!-- 二级目录的模板 -->
+  <script type="text/html" id="tpl2">
+    {{ each rows v k }}
+    <li>
+      <a data-id="{{v.id}}" href="#">{{v.categoryName}}</a>
+    </li>
     {{ /each }}
   </script>
 
@@ -202,10 +221,10 @@
   <script src="lib/artTemplate/template-web.js"></script>
   <script src="lib/bootstrap/js/bootstrap.js"></script>
   <script src="lib/bootstrap-paginator/bootstrap-paginator.js"></script>
+  <script src="lib/bootstrap-validator/js/bootstrapValidator.js"></script>
   <script src="lib/nprogress/nprogress.js"></script>
   <script src="js/common.js"></script>
   <script src="js/second.js"></script>
-
 </body>
 
 </html>

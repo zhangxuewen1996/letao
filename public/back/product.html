@@ -139,56 +139,70 @@
           <h4 class="modal-title">
             添加分类</h4>
         </div>
-        <div class="modal-body">
-          <!-- 链式框 -->
-          <div class="form-group">
-            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-              请选择二级分类
-              <span class="caret"></span>
-            </button>
-            <ul class="dropdown-menu">
-              <li>
-                <a href="#">美女</a>
-              </li>
-            </ul>
-          </div>
+        <form>
 
-          <!-- 表单 -->
-          <div class="form-group">
-            <input type="text" class="form-control" placeholder="请输入商品的名称">
-          </div>
-
-          <div class="form-group">
-            <textarea type="text" class="form-control" rows="3" placeholder="请输入商品的描述"></textarea>
-          </div>
-          <div class="form-group">
-            <input type="text" class="form-control" placeholder="请输入商品的库存">
-          </div>
-
-          <div class="form-group">
-            <input type="text" class="form-control" placeholder="请输入商品的尺码(32-46)">
-          </div>
-
-          <div class="form-group">
-            <input type="text" class="form-control" placeholder="请输入商品的原价">
-          </div>
-          <div class="form-group">
-            <input type="text" class="form-control" placeholder="请输入商品的价格">
-          </div>
-
-          <!-- 上传图片 -->
-          <div class="form-group">
-            <div class="box">
-              <button class="btn btn-default">上传图片</button>
-              <input type="file" name="" id="">
+          <div class="modal-body">
+            <!-- 链式框 -->
+            <div class="form-group">
+              <input type="hidden" name="brandId">
+              <div class="btn-group">
+                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                  <span class="dropdown-text">请选择二级分类</span>
+                  <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu">
+                  <!-- 加入的地方 -->
+                </ul>
+              </div>
             </div>
+
+            <!-- 表单 -->
+            <div class="form-group">
+              <input type="text" class="form-control" placeholder="请输入商品的名称" name="proName">
+            </div>
+
+            <div class="form-group">
+              <textarea type="text" class="form-control" rows="3" placeholder="请输入商品的描述" name="proDesc"></textarea>
+            </div>
+            <div class="form-group">
+              <input type="text" name="num" class="form-control" placeholder="请输入商品的库存">
+            </div>
+
+            <div class="form-group">
+              <input type="text" name="size" class="form-control" placeholder="请输入商品的尺码(32-46)">
+            </div>
+
+            <div class="form-group">
+              <input type="text" name="oldPrice" class="form-control" placeholder="请输入商品的原价">
+            </div>
+            <div class="form-group">
+              <input type="text" name="price" class="form-control" placeholder="请输入商品的价格">
+            </div>
+
+            <!-- 上传图片 -->
+            <div class="form-group">
+              <div class="box">
+                <a class="btn btn-default">上传图片</a>
+                <input type="file" name="pic1" id="fileupload" data-url="/product/addProductPic">
+              </div>
+            </div>
+
+            <!-- 精华：留个位置 -->
+            <div class="form-group img_box">
+              <!-- <img src="images/none.png" width="100" height="100" alt="">
+              <img src="images/none.png" width="100" height="100" alt="">
+              <img src="images/none.png" width="100" height="100" alt=""> -->
+              <input type="hidden" name="brandLogo">
+            </div>
+
+
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+            <button type="submit" class="btn btn-primary icon_add">添加</button>
           </div>
 
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-          <button type="button" class="btn btn-primary icon_add">添加</button>
-        </div>
+        </form>
       </div>
       <!-- /.modal-content -->
     </div>
@@ -215,15 +229,24 @@
     {{ /each }}
   </script>
 
+  <script type="text/html" id="tpl2">
+    {{ each rows v k }}
+    <li>
+      <a data-id="{{ v.id }}" href="#">{{v.brandName}}</a>
+    </li>
+    {{ /each }}
+  </script>
+
   <script src="lib/jquery/jquery.js"></script>
   <script src="lib/bootstrap/js/bootstrap.js"></script>
   <script src="lib/bootstrap-paginator/bootstrap-paginator.js"></script>
   <script src="lib/jquery-fileupload/jquery.ui.widget.js"></script>
   <script src="lib/jquery-fileupload/jquery.fileupload.js"></script>
-  <script src="lib/artTemplate/template-web.js"></script>
-  <script src="lib/nprogress/nprogress.js"></script>
-  <script src="js/common.js"></script>
-  <script src="js/product.js"></script>
+  <script src="lib/bootstrap-validator/js/bootstrapValidator.js"></script>
+  <script src=" lib/artTemplate/template-web.js "></script>
+  <script src="lib/nprogress/nprogress.js "></script>
+  <script src="js/common.js "></script>
+  <script src="js/product.js "></script>
 
 </body>
 
