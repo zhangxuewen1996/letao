@@ -35,6 +35,21 @@ $(function () {
                 return page;
             };
           },
+          tooltipTitles: function (type,  page,  current) {
+            switch (type) {
+              case "first":
+                return "首页";
+              case "prev":
+                return "上一页";
+              case "next":
+                return "下一页";
+              case "last":
+                return "末页";
+              case "page":
+                return page;
+            };
+          },
+          useBootstrapTooltip: true,
           onPageClicked: function (a, b, c, page) {
             pageNum = page;
             render();
@@ -109,7 +124,7 @@ $(function () {
             message: "请输入商品的库存",
           },
           regexp: {
-            regexp: /^\d*$/,
+            regexp: /^[1-9]\d{0,4}$/,
             message: '请输入正确的库存数'
           }
         }
@@ -185,8 +200,19 @@ $(function () {
       success: function (info) {
         console.log(info);
         if (info.success) {
+          // 隐藏模态框
           $("#add-sec").modal("hide");
+          // 重新渲染
+          // 渲染第一页
+          page = 1;
           render();
+          // 重置表单
+          $("form").data("bootstrapValidator").resetForm(true);
+          // 将dropdown-text改为请选择二级目录
+          $(".dropdown-text").text("请选择二级分类");
+          // 清除图片
+          $(".img_box img").remove();
+
         }
       }
     });
