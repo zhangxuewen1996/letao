@@ -99,3 +99,7 @@ body {
   height: 100%;
   position: relative;
 }
+
+.logout {
+  padding: 10px;
+}
