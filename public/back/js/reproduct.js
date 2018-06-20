@@ -1,92 +1,113 @@
 $(function () {
-  var pageNum = 1;
-  var pageSize = 2;
+  // 动态将页面渲染出阿里
+  var page = 1;
+  var pageSize = 5;
+  // 定义这个数组用来存储上传图片得到的结果，一遍后面对地址的拼串，和表单的校验
+  var imgs = [];
+  // 调用渲染
+  render();
 
-  //渲染
   function render() {
+    // 发送ajax请求
     $.ajax({
       type: "get",
       url: "/product/queryProductDetailList",
       data: {
-        page: pageNum,
+        page: page,
         pageSize: pageSize
       },
       success: function (info) {
-        var html = template("tpl", info);
-        $("tbody").html(html);
+        $("tbody").html(template("tpl", info));
 
+        // 生成分页器
         $("#paginator").bootstrapPaginator({
           bootstrapMajorVersion: 3,
-          currentPage: pageNum,
+          currentPage: page,
           totalPages: Math.ceil(info.total / info.size),
-          //改变显示上一页下一页的值
-          itemTexts: function (type,  page,  current) {
+          // 改变按钮的值
+          itemTexts: function (type, page, current) {
             switch (type) {
               case "first":
                 return "首页";
+              case "last":
+                return "尾页";
               case "prev":
                 return "上一页";
               case "next":
                 return "下一页";
-              case "last":
-                return "末页";
               case "page":
                 return page;
-            };
+            }
           },
-          tooltipTitles: function (type,  page,  current) {
+          tooltipTitles: function (type, page, current) {
             switch (type) {
               case "first":
                 return "首页";
+              case "last":
+                return "尾页";
               case "prev":
                 return "上一页";
               case "next":
                 return "下一页";
-              case "last":
-                return "末页";
               case "page":
                 return page;
-            };
+            }
           },
           useBootstrapTooltip: true,
-          onPageClicked: function (a, b, c, page) {
-            pageNum = page;
-            render();
-          },
+          onPageClicked: function (a, b, c, p) {
+            page = p,
+              render();
+          }
         });
       }
     });
   };
-  render();
 
-  // 点击添加商品，发送ajax请求生成二级分类的名称
-  $(".lt_main .btn").on("click", function () {
+  //改变按钮链表的值
+  $(".addBtn").on("click", function () {
+    // 发送ajax请求，动态生成dropdown-menu下的li
     $.ajax({
       type: "get",
       url: "/category/querySecondCategoryPaging",
       data: {
         page: 1,
-        pageSize: 100
+        pageSize: 100,
       },
       success: function (info) {
         $(".dropdown-menu").html(template("tpl2", info));
       }
-    });
+    })
+
   });
 
-  // 给dropdown-menu下所有的a注册点击事件
+  // 注册按钮链表注册事件
   $(".dropdown-menu").on("click", "a", function () {
-    // 改变dropdown-menu的值
     $(".dropdown-text").text($(this).text());
     $("[name='brandId']").val($(this).data("id"));
-    // 手动改变校验结果
+    // 这里需要在改变value值的同时，改变了dropdown-menu的值
     $("form").data("bootstrapValidator").updateStatus("brandId", "VALID");
-
   });
 
-  // 进行表单验证
+  // 上传图片的功能
+  $("#fileupload").fileupload({
+    done: function (e, data) {
+      if (imgs.length >= 3) {
+        return;
+      }
+      imgs.push(data.result);
+      $(".img_box").append('<img src="' + data.result.picAddr + '" width="100" height="100">');
+      // 手动更高校验的状态
+      if (imgs.length == 3) {
+        $("form").data("bootstrapValidator").updateStatus("brandLogo", "VALID");
+      } else {
+        $("form").data("bootstrapValidator").updateStatus("brandLogo", "INVALID");
+      }
+    }
+  });
+
+  // 表单校验
   $("form").bootstrapValidator({
-    // 1。这里需要注意由于bootstrapValidator默认会不校验type为hidden disabled not(:visible)
+    // 这里默认对disabled hidden visable的不校验
     excluded: [],
     //2. 指定校验时的图标显示，默认是bootstrap风格
     feedbackIcons: {
@@ -122,8 +143,8 @@ $(function () {
             message: "请输入商品的库存",
           },
           regexp: {
-            regexp: /^[1-9]\d{0,4}$/,
-            message: '请输入正确的库存数'
+            regexp: /^[1-9]\d{1,4}$/,
+            message: "请输入正确的库存数量",
           }
         }
       },
@@ -134,7 +155,7 @@ $(function () {
           },
           regexp: {
             regexp: /^\d{2}-\d{2}$/,
-            message: '请输入正确的尺码',
+            message: "请输入正确的尺码",
           }
         }
       },
@@ -148,68 +169,48 @@ $(function () {
       price: {
         validators: {
           notEmpty: {
-            message: "请输入商品的价格",
+            message: "请输入商品的现价",
           }
         }
       },
       brandLogo: {
         validators: {
           notEmpty: {
-            message: "请输入3张图片",
+            message: "请上传3张图片",
           }
         }
-      }
+      },
     }
   });
 
-  // 进行上传图片的操作n
-  // 限制只能传三张照片
-  var imgs = [];
-  $("#fileupload").fileupload({
-    type: "json",
-    done: function (e, data) {
-      // 限制只能传三张照片      
-      if (imgs.length >= 3) {
-        return false;
-      }
-      $(".img_box").append('<img src="' + data.result.picAddr + '" width="100" height="100" alt="">');
-      imgs.push(data.result);
-      if (imgs.length == 3) {
-        $("form").data("bootstrapValidator").updateStatus("brandLogo", "VALID");
-      } else {
-        $("form").data("bootstrapValidator").updateStatus("brandLogo", "INVALID");
-      }
-    }
-  });
-
-  // 注册表单校验完成事件
+  // 注册表单校验成功事件
   $("form").on("success.form.bv", function (e) {
     e.preventDefault();
-    var $content = $("form").serialize();
-    $content += "&picName1=" + imgs[0].picName + "&picAddr1=" + imgs[0].picAddr;
-    $content += "&picName2=" + imgs[1].picName + "&picAddr2=" + imgs[1].picAddr;
-    $content += "&picName3=" + imgs[2].picName + "&picAddr3=" + imgs[2].picAddr;
+    var para = $("form").serialize();
+    para += "&picName1=" + imgs[0].picName + "&picAddr1=" + imgs[0].picAddr;
+    para += "&picName2=" + imgs[1].picName + "&picAddr2=" + imgs[1].picAddr;
+    para += "&picName3=" + imgs[2].picName + "&picAddr3=" + imgs[2].picAddr;
+    //发送ajax请求
     $.ajax({
       type: "post",
       url: "/product/addProduct",
-      data: $content,
+      data: para,
       success: function (info) {
         if (info.success) {
-          // 隐藏模态框
-          $("#add-sec").modal("hide");
-          // 重新渲染
-          // 渲染第一页
+          //隐藏模态框
+          $("#addProduct").modal("hide");
+          //重新渲染
           page = 1;
           render();
+          // 改变下拉菜单内的文字
+          $(".dropdown-text").text("请选择二级分类");
           // 重置表单
           $("form").data("bootstrapValidator").resetForm(true);
-          // 将dropdown-text改为请选择二级目录
-          $(".dropdown-text").text("请选择二级分类");
-          // 清除图片
+          // 将图片清除
           $(".img_box img").remove();
-
         }
       }
-    });
+    })
+
   });
 });
