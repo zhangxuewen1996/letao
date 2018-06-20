@@ -1,0 +1,33 @@
+.nav {
+  padding: 10px;
+}
+
+.nav li {
+  width: 33.33%;
+  float: left;
+}
+
+.product {
+  padding: 10px;
+  text-align: center;
+}
+
+.product a {
+  width: 48%;
+  float: left;
+  padding: 10px;
+  border: 1px solid #ccc;
+  margin-bottom: 10px;
+}
+
+.product a:nth-child(even) {
+  margin-left: 4%;
+}
+
+.product a span:first-child {
+  color: red;
+}
+
+.product a span:last-child {
+  text-decoration: line-through;
+}

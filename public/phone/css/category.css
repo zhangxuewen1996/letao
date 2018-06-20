@@ -1,0 +1,43 @@
+.category_left {
+  width: 90px;
+  height: 100%;
+  float: left;
+  /* 菜的坑：一定要给父级加定位 */
+  position: relative;
+}
+
+.category_right {
+  overflow: hidden;
+  height: 100%;
+  position: relative;
+  background-color: #fff;
+}
+
+.category_left li {
+  width: 100%;
+  height: 50px;
+  text-align: center;
+  line-height: 50px;
+  background-color: pink;
+  border-right: 1px solid red;
+  border-bottom: 1px solid red;
+}
+
+.category_left li.now {
+  background-color: #fff;
+  border-right: none;
+}
+.category_right li {
+  width: 33.33%;
+  float: left;
+  text-align: center;
+}
+.category_right li img {
+  width: 62px;
+  height: 62px;
+  margin: 0 auto;
+}
+
+.p_10 {
+  padding: 10px;
+}
