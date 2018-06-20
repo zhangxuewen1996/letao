@@ -1,0 +1,51 @@
+html,
+body {
+  height: 100%;
+}
+
+.lt_container {
+  width: 100%;
+  height: 100%;
+  max-width: 640px;
+  min-width: 320px;
+  margin: 0 auto;
+  background-color: pink;
+  padding-top: 45px;
+}
+
+.lt_container .lt_header {
+  width: 100%;
+  max-width: 640px;
+  min-width: 320px;
+  height: 45px;
+  background-color: #069;
+  position: fixed;
+  top: 0;
+}
+
+.lt_container .lt_header .icon-left,
+.lt_container .lt_header .icon-right {
+  width: 45px;
+  height: 45px;
+  line-height: 45px;
+  text-align: center;
+  position: absolute;
+  top: 0;
+  color: #fff;
+}
+
+.lt_container .lt_header .icon-left {
+  left: 0;
+}
+
+.lt_container .lt_header .icon-right {
+  right: 0;
+}
+
+.lt_container .lt_header h4 {
+  height: 45px;
+  line-height: 45px;
+  text-align: center;
+  margin: 0 45px;
+  color: #fff;
+}
