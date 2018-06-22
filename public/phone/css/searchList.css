@@ -1,0 +1,25 @@
+.lt_sort {
+  padding: 0 10px;
+  background-color: #eee;
+  height: 30px;
+  line-height: 30px;
+}
+
+.lt_sort li {
+  width: 25%;
+  float: left;
+  text-align: center;
+  font-size: 12px;
+}
+
+.lt_sort li a {
+  color: #666;
+}
+
+.lt_sort li.now a {
+  color: darkorange;
+}
+
+.product>p {
+  text-align: left;
+}
